@@ -1,35 +1,38 @@
-// (function() {
+import {FlightService} from '../services/flight.service';
+import {BookingEventService} from '../services/booking-event.service';
+import {Flight} from "../shared/flight";
 
-    export function FlightSearchController(flightService, bookingEventService) {
+export class FlightSearchController {
 
-        this.from = 'Hamburg';
-        this.to = 'Graz';
-        this.selectedFlight = null;
-        this.flightService = flightService;
-        this.bookingEventService = bookingEventService;
+    public from: string = 'Hamburg';
+    public to: string = 'Graz';
+    public selectedFlight: Flight = null;
 
-        this.getFlights = function () {
-            return this.flightService.flights;
-        }
+    private _flightService: FlightService;
+    private _bookingEventService: BookingEventService;
 
-        this.search = function () {
-
-            return this
-                .flightService
-                .find(this.from, this.to)
-                .catch(function (resp) {
-                    console.debug(resp);
-                });
-        }
-
-        this.select = function (f) {
-            this.selectedFlight = f;
-            this.bookingEventService.publish(f);
-        }
+    constructor(flightService: FlightService, bookingEventService: BookingEventService){
+        this._flightService = flightService;
+        this._bookingEventService = bookingEventService;
     }
 
-//     angular
-//         .module('flight-app')
-//         .controller('FlightSearchController', FlightSearchController);
+    getFlights () {
+        return this._flightService.flights;
+    }
 
-// })();
+    search () {
+
+        return this
+            ._flightService
+            .find(this.from, this.to)
+            .catch(function (resp) {
+                console.debug(resp);
+            }); 
+    }
+
+    select (f: Flight) {
+        this.selectedFlight = f;
+        this._bookingEventService.publish(f);
+    }    
+}
+
