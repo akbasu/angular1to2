@@ -1,6 +1,6 @@
-(function() {
+// (function() {
 
-    function FlightSearchController(flightService, bookingEventService) {
+    export function FlightSearchController(flightService, bookingEventService) {
 
         this.from = 'Hamburg';
         this.to = 'Graz';
@@ -28,8 +28,8 @@
         }
     }
 
-    angular
-        .module('flight-app')
-        .controller('FlightSearchController', FlightSearchController);
+//     angular
+//         .module('flight-app')
+//         .controller('FlightSearchController', FlightSearchController);
 
-})();
+// })();
